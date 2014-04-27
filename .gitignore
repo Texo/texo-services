@@ -52,3 +52,10 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Virtualenv
+virtualenv
+
+# Deployment
+dist/app/**
+dist/conf/**
+dist/docs/**

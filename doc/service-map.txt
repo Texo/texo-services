@@ -1,0 +1,18 @@
+# Service Map
+
+## Open Services
+
+These are services that require no authentication and are consumable by
+the public.
+
+* **Get posts by page
+* **Get posts by tag and page
+* **Search posts by a term
+* **Get a single post by /{year}/{month}/{slug}
+* **Get tags
+* **Get a single tag by ID
+
+## Closed Services
+
+These are services that require authentication. They are not consumable
+unless you have authorized. These are primarily for administrative functions.
