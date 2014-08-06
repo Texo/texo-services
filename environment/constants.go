@@ -1,0 +1,11 @@
+package environment
+
+const (
+	ENV_POSTS_PER_PAGE string = "TEXO_POSTS_PER_PAGE"
+
+	ENV_SQL_ADDRESS    string = "TEXO_SQL_ADDRESS"
+	ENV_SQL_PORT       string = "TEXO_SQL_PORT"
+	ENV_SQL_DATABASE   string = "TEXO_SQL_DATABASE"
+	ENV_SQL_USERNAME   string = "TEXO_SQL_USERNAME"
+	ENV_SQL_PASSWORD   string = "TEXO_SQL_PASSWORD"
+)
