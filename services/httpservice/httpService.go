@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-//	"strconv"
+	"strings"
 )
 
 type BasicResponseMessage struct {
@@ -31,6 +31,15 @@ func Error(writer http.ResponseWriter, message string) {
 	WriteJson(writer, result, 500)
 }
 
+func NotFound(writer http.ResponseWriter, message string) {
+	result := BasicResponseMessage{
+		Success: false,
+		Message: message,
+	}
+
+	WriteJson(writer, result, 404)
+}
+
 func ParseJsonBody(req *http.Request, receiver interface{}) (error) {
 	var err error
 
@@ -49,11 +58,11 @@ func Success(writer http.ResponseWriter, message string) {
 }
 
 func WriteJson(writer http.ResponseWriter, object interface{}, code int) {
-	json, _ := json.Marshal(object)
-	content := string(json)
-	size := len(json)
+	jsonBytes, _ := json.Marshal(object)
+	content := strings.Replace(string(jsonBytes), "%", "%%", -1)
+	//size := len(json)
 
-	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	//writer.Header().Add("Content-Length", strconv.Itoa(size))
 	writer.WriteHeader(code)
 	fmt.Fprintf(writer, content)

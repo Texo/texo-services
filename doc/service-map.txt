@@ -5,12 +5,12 @@
 These are services that require no authentication and are consumable by
 the public.
 
-* **Get posts by page
-* **Get posts by tag and page
-* **Search posts by a term
-* **Get a single post by /{year}/{month}/{slug}
-* **Get tags
-* **Get a single tag by ID
+* **Get posts by page - /posts/{pageNumber}
+* **Get posts by tag and page - /posts/{pageNumber}/tag/{term}
+* **Search posts by a term - /posts/{pageNumber}/search/{term}
+* **Get a single post by - /post/{year}/{month}/{slug}
+* **Get tags - /tags
+* **Get a single tag by ID - /tag/{id}
 
 ## Closed Services
 

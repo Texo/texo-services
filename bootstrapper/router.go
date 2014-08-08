@@ -19,6 +19,15 @@ func SetupWebRouter() *mux.Router {
 	 * Posts
 	 */
 	router.HandleFunc("/v1/posts/{pageNumber:[0-9]+}", controllers.GetPageOfPublicPosts_v1).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/posts/{pageNumber:[0-9]+}/tag/{tag}", controllers.GetPageOfPublicPostsByTag_v1).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/posts/{pageNumber:[0-9]+}/search/{term}", controllers.GetPageOfPublicPostsByTerm_v1).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/post/{year:[0-9]+}/{month:[0-9]+}/{slug}", controllers.GetPost_v1).Methods("GET", "OPTIONS")
+
+	/*
+	 * Tags
+	 */
+	router.HandleFunc("/v1/tags", controllers.GetTags_v1).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/tag/{id:[0-9]+}", controllers.GetTag_v1).Methods("GET", "OPTIONS")
 
 	return router
 }
