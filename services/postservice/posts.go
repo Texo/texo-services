@@ -6,6 +6,7 @@ import (
 
 	"github.com/texo/texo-services/database"
 	"github.com/texo/texo-services/model/posts"
+	"github.com/texo/texo-services/services/markdownservice"
 )
 
 /*
@@ -41,7 +42,7 @@ Get a single post by year, month and slug.
 */
 func GetPost(year, month int, slug string) (posts.Post, error) {
 	post := posts.Post{}
-	posts, err := getPosts(1, 1, "Published", year, month, slug, "", "")
+	posts, err := getPosts(true, 1, 1, "Published", year, month, slug, "", "")
 
 	if len(posts.Posts) > 0 {
 		post = posts.Posts[0]
@@ -54,28 +55,28 @@ func GetPost(year, month int, slug string) (posts.Post, error) {
 Get Published posts.
 */
 func GetPublishedPosts(page int, postsPerPage int) (posts.PostCollection, error) {
-	return getPosts(page, postsPerPage, "Published", 0, 0, "", "", "")
+	return getPosts(true, page, postsPerPage, "Published", 0, 0, "", "", "")
 }
 
 /*
 Get Published posts by tag.
 */
 func GetPublishedPostsByTag(page int, postsPerPage int, tag string) (posts.PostCollection, error) {
-	return getPosts(page, postsPerPage, "Published", 0, 0, "", tag, "")
+	return getPosts(true, page, postsPerPage, "Published", 0, 0, "", tag, "")
 }
 
 /*
 Get Published posts by search term.
 */
 func GetPublishedPostsByTerm(page int, postsPerPage int, term string) (posts.PostCollection, error) {
-	return getPosts(page, postsPerPage, "Published", 0, 0, "", "", term)
+	return getPosts(true, page, postsPerPage, "Published", 0, 0, "", "", term)
 }
 
 
 /*
 This private function retrieves posts filtered by a set of criteria.
 */
-func getPosts(page int, postsPerPage int, status string, year, month int, slug, tag, term string) (posts.PostCollection, error) {
+func getPosts(parseMarkdown bool, page int, postsPerPage int, status string, year, month int, slug, tag, term string) (posts.PostCollection, error) {
 	var err error
 	var postCount int
 	result := posts.NewPostCollection()
@@ -268,6 +269,14 @@ func getPosts(page int, postsPerPage int, status string, year, month int, slug, 
 			&tagList,
 			&tagIdList,
 		)
+
+		/*
+		 * If the parseMarkdown flag is true we want to pre-parse
+		 * the content.
+		 */
+		if parseMarkdown {
+			content = string(markdownservice.ParseMarkdown(content))
+		}
 
 		post := posts.Post{
 			Id: id,
